@@ -1,0 +1,3 @@
+vrpn_odom_publisher:
+    ros__parameters:
+        rigid_bodies: ['drone','rover']
