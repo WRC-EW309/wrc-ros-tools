@@ -21,7 +21,7 @@ class OdomPublisher(Node):
 
         self.declare_parameter('rigid_bodies', ['rover','drone'])
         self.names = my_param = self.get_parameter('rigid_bodies').get_parameter_value().string_value
-        self.names = ['rover','drone']
+        self.names = ['koala1','koala2','koala3','koala4']
         self.names_n = len(self.names)
         self.sub_list = []
         self.pub_list = []
@@ -33,10 +33,10 @@ class OdomPublisher(Node):
         self.last_time_list = []
         self.adv_indx = 0
         self.send_indx = 0
-        self.get_clock().now()       
+        self.get_clock().now()
 
         for current_name in self.names:
-            sub = self.create_subscription(PoseStamped,'/'+current_name+'/pose',partial(self.pose_callback,current_name),10)            
+            sub = self.create_subscription(PoseStamped,'/'+current_name+'/pose',partial(self.pose_callback,current_name),10)
             self.sub_list.append(sub)
             pub = self.create_publisher(Odometry, '/'+current_name+'/mocap/odom', 10)
             self.pub_list.append(pub)
@@ -51,7 +51,7 @@ class OdomPublisher(Node):
             self.vel_est_list.append(vel)
 
     def pose_callback(self,name,msg):
-        
+
         ind = self.names.index(name)
 
         time_dur = self.get_clock().now() - self.last_time_list[ind]
@@ -62,7 +62,7 @@ class OdomPublisher(Node):
             msg.pose.orientation.z,
             )
 
-        # Rotations from VRPN frame back to Artemis Frame 
+        # Rotations from VRPN frame back to Artemis Frame
         q_rot = quaternion.from_euler_angles(0,math.pi/2,math.pi/2)
         q_pos = np.quaternion(0,msg.pose.position.x,msg.pose.position.y,msg.pose.position.z)
         q_pos_arty =  q_rot*(q_pos)*np.conjugate(q_rot)
@@ -77,7 +77,7 @@ class OdomPublisher(Node):
         vel = np.quaternion(0,self.vel_est_list[ind][0,0],self.vel_est_list[ind][0,1],self.vel_est_list[ind][0,2])
         vel_body = np.conjugate(q_arty)*vel*q_arty
 
-        
+
         self.old_pos_list[ind][0,:] = self.pos_list[ind][0,:]
         self.last_time_list[ind] = self.get_clock().now()
 
@@ -98,7 +98,7 @@ class OdomPublisher(Node):
 
         odom_cmd.twist.twist.linear.x = vel_body.x
         odom_cmd.twist.twist.linear.y = vel_body.y
-        odom_cmd.twist.twist.linear.z = vel_body.z        
+        odom_cmd.twist.twist.linear.z = vel_body.z
 
         self.pub_list[ind].publish(odom_cmd)
 
