@@ -21,11 +21,12 @@ class OdomPublisher(Node):
 
         self.declare_parameter('rigid_bodies', ['rover','drone'])
         self.names = self.get_parameter('rigid_bodies').get_parameter_value().string_value
-        self.names = ['rover_2']
+        self.names = ['daisy']
         self.names_n = len(self.names)
         self.sub_list = []
         self.pub_list = []
         self.vel_pub_list = []
+        self.eul_pub_list = []
         self.pose_list = []
         self.pos_list = []
         self.old_pos_list = []
@@ -43,6 +44,8 @@ class OdomPublisher(Node):
             self.pub_list.append(pub)
             vel_pub = self.create_publisher(Vector3Stamped,'/'+current_name+'/vel',10)
             self.vel_pub_list.append(vel_pub)
+            eul_pub = self.create_publisher(Vector3Stamped,'/'+current_name+'/eul',10)
+            self.eul_pub_list.append(eul_pub)
             
             tmp_pose = PoseStamped()
             self.pose_list.append(tmp_pose)
@@ -65,6 +68,11 @@ class OdomPublisher(Node):
             msg.pose.orientation.y,
             msg.pose.orientation.z,
             )
+
+        R = quaternion.as_rotation_matrix(q_arty)
+        yaw = -math.atan2(R[0][1],R[0][0])
+        pitch = -math.asin(R[2][0])
+        roll = math.atan2(R[2][1],R[2][2])
 
         # Rotations from VRPN frame back to Artemis Frame
        # q_rot = quaternion.from_euler_angles(0,math.pi/2,math.pi/2)
@@ -115,6 +123,15 @@ class OdomPublisher(Node):
         vel_msg.vector.z = self.vel_est_list[ind][0,2]
 	
         self.vel_pub_list[ind].publish(vel_msg)
+
+        eul_msg = Vector3Stamped()
+        eul_msg.header.frame_id = 'world'
+        eul_msg.header.stamp.sec = odom_cmd.header.stamp.sec
+        eul_msg.header.stamp.nanosec = odom_cmd.header.stamp.nanosec
+        eul_msg.vector.x = roll
+        eul_msg.vector.y = pitch
+        eul_msg.vector.z = yaw
+        self.eul_pub_list[ind].publish(eul_msg)
 	
 
 def main(args=None):
