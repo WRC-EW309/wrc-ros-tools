@@ -1,0 +1,13 @@
+/**:
+  rosbag_service_node:
+    ros__parameters:
+      file_header: "rover_data"
+      save_dir: '/home/ubuntu/rover_main/bagfiles'
+      save_topics: 
+        - '/mavros/imu/data'
+        - '/mavros/global_position/raw/fix'
+        - '/mavros/local_position/odom'
+        - '/mavros/local_position/velocity_body'
+        - '/mavros/rc/in'
+        - '/mavros/rc/out'
+        - '/mavros/wheel_speed'
