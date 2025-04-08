@@ -20,7 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': ['pose_listener = artemis_tools_ros2.pose_listener:main',
-                   'pose_listener_qualisys = artemis_tools_ros2.pose_listener_qualisys:main'         
+                   'pose_listener_qualisys = artemis_tools_ros2.pose_listener_qualisys:main',
+                   'rosbag_service = artemis_tools_ros2.rosbag_service:main',
+                   'rigid_bodies_repub = artemis_tools_ros2.rigid_bodies_republisher:main' 
         ],
     },
 )
