@@ -19,7 +19,8 @@ setup(
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': [
+        'console_scripts': ['pose_listener = artemis_tools_ros2.pose_listener:main',
+        'toggle_teleop = artemis_tools_ros2.toggle_teleop:main'
         ],
     },
 )

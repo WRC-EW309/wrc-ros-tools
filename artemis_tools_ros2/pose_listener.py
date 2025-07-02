@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from functools import partial
 import math
 import numpy as np
@@ -19,9 +20,9 @@ class OdomPublisher(Node):
         super().__init__('vrpn_odom_publisher')
 
 
-        self.declare_parameter('rigid_bodies', ['rover','drone'])
-        self.names = my_param = self.get_parameter('rigid_bodies').get_parameter_value().string_value
-        self.names = ['koala1','koala2','koala3','koala4']
+        self.declare_parameter('rigid_bodies', ['create_1','create_2','create_3','create_4'])
+        self.names = self.get_parameter('rigid_bodies').get_parameter_value().string_array_value
+        print(self.names)
         self.names_n = len(self.names)
         self.sub_list = []
         self.pub_list = []
