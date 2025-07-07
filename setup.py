@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'artemis_tools_ros2'
+package_name = 'wrc_ros_tools'
 
 setup(
     name=package_name,
@@ -19,10 +19,10 @@ setup(
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': ['pose_listener = artemis_tools_ros2.pose_listener:main',
-                   'pose_listener_qualisys = artemis_tools_ros2.pose_listener_qualisys:main',
-                   'rosbag_service = artemis_tools_ros2.rosbag_service:main',
-                   'rigid_bodies_repub = artemis_tools_ros2.rigid_bodies_republisher:main' 
+        'console_scripts': ['pose_listener = wrc_ros_tools.pose_listener:main',
+                   'pose_listener_qualisys = wrc_ros_tools.pose_listener_qualisys:main',
+                   'rosbag_service = wrc_ros_tools.rosbag_service:main',
+                   'rigid_bodies_repub = wrc_ros_tools.rigid_bodies_republisher:main'
         ],
     },
 )

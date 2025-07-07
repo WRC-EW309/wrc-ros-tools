@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>artemis_tools_ros2</name>
-  <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="dawkins@usna.edu">arty</maintainer>
+  <name>wrc_ros_tools</name>
+  <version>1.0.0</version>
+  <description>A Ros package containing various tools for working with the WRC labs</description>
+  <maintainer email="dawkins@usna.edu">dawkins</maintainer>
   <license>TODO: License declaration</license>
 
   <test_depend>ament_copyright</test_depend>
